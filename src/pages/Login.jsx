@@ -34,8 +34,10 @@ const Login = () => {
         setError(err.response.data.message);
       } else if (err.response && err.response.status === 401) {
         setError('Invalid email or password.');
+      } else if (err.code === 'ERR_NETWORK' || !err.response) {
+        setError('Unable to connect to backend server. Please check your network connection and try again.');
       } else {
-        setError('Login failed. Please check your credentials and backend connection.');
+        setError('Login failed. Please check your credentials and try again.');
       }
     } finally {
       setLoading(false);

@@ -35,8 +35,12 @@ const Register = () => {
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);
+      } else if (err.response && err.response.status === 409) {
+        setError('Email is already in use. Please use a different email or sign in.');
+      } else if (err.code === 'ERR_NETWORK' || !err.response) {
+        setError('Unable to connect to server. Please check your network connection and try again.');
       } else {
-        setError('Registration failed. Email may already be in use.');
+        setError('Registration failed. Please check your input and try again.');
       }
     } finally {
       setLoading(false);
